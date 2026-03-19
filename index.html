@@ -1,797 +1,715 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Portfólio — André Masoni</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iOCIgZmlsbD0iIzBCMjU1OSIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyMyIgZm9udC1mYW1pbHk9Im1vbm9zcGFjZSIgZm9udC1zaXplPSIyMCIgZm9udC13ZWlnaHQ9ImJvbGQiCiAgICAgICAgZmlsbD0iIzdCNUNGNiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgbGV0dGVyLXNwYWNpbmc9Ii0xIj4mbHQ7QSZndDs8L3RleHQ+Cjwvc3ZnPg=="/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
-<style>
-:root {
-  --bg:      #0D1214;
-  --bg2:     #141C1F;
-  --bg3:     #1A2428;
-  --accent:  #96D7EB;
-  --accent2: #839CB5;
-  --accent3: #B1E1E9;
-  --cyan:    #96D7EB;
-  --green:   #B1E1E9;
-  --text:    #F2E4F9;
-  --muted:   #686466;
-  --border:  rgba(150,215,235,0.15);
-  --glow:    rgba(150,215,235,0.28);
-  --radius:  16px;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>André Masoni Fraile | Portfólio Backend</title>
+    <!-- Tailwind CSS Play CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+        
+        :root {
+            --accent: #00ff9d;
+            --bg-dark: #0a0a0a;
+            --sidebar: #121212;
+            --editor: #1a1a1a;
+            --terminal: #0d0d0d;
+            --java-red: #e06c75;
+            --spring-green: #98c379;
+        }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: #d4d4d4;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'JetBrains Mono', monospace;
-  overflow-x: hidden;
-  cursor: none;
-  font-size: 14px;
-}
+        .font-mono { font-family: 'Fira Code', monospace; }
+        
+        /* Syntax Highlighting */
+        .syntax-keyword { color: #c678dd; }
+        .syntax-string { color: #98c379; }
+        .syntax-function { color: #61afef; }
+        .syntax-variable { color: #e06c75; }
+        .syntax-comment { color: #7f848e; font-style: italic; }
+        .syntax-type { color: #d19a66; }
+        .syntax-constant { color: #56b6c2; }
+        .syntax-default { color: #abb2bf; }
+        
+        .line-number {
+            display: inline-block;
+            width: 32px;
+            text-align: right;
+            margin-right: 16px;
+            color: #4b5563;
+            user-select: none;
+        }
 
-/* ── Cursor ── */
-#cursor {
-  position: fixed; top: 0; left: 0; z-index: 9999;
-  width: 10px; height: 10px;
-  background: var(--accent); border-radius: 50%;
-  pointer-events: none;
-  transition: transform .15s ease, background .2s;
-  transform: translate(-50%,-50%);
-}
-#cursor-ring {
-  position: fixed; top: 0; left: 0; z-index: 9998;
-  width: 32px; height: 32px;
-  border: 1.5px solid var(--accent2); border-radius: 50%;
-  pointer-events: none;
-  transition: transform .35s ease, opacity .3s;
-  transform: translate(-50%,-50%);
-  opacity: .55;
-}
-@media (hover: none) { #cursor, #cursor-ring { display: none; } body { cursor: auto; } }
+        .code-line {
+            display: flex;
+            align-items: flex-start;
+            white-space: pre;
+            min-width: fit-content;
+        }
 
-/* ── Noise & mesh ── */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: .025; pointer-events: none;
-}
-.mesh {
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse 60% 50% at 10% 20%, rgba(131,156,181,.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 85% 75%, rgba(150,215,235,.10) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 35% at 50% 50%, rgba(177,225,233,.05) 0%, transparent 60%);
-}
+        .sidebar-item.active {
+            background-color: rgba(255, 255, 255, 0.07);
+            color: white;
+            border-left: 2px solid var(--accent);
+        }
 
-/* ── Nav ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 40px;
-  backdrop-filter: blur(20px);
-  background: rgba(13,18,20,.88);
-  border-bottom: 1px solid var(--border);
-}
-.logo {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700; font-size: .88rem;
-  color: var(--text); text-decoration: none;
-  display: flex; align-items: center; gap: 9px;
-}
-.logo-dot {
-  width: 7px; height: 7px;
-  background: var(--accent); border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{box-shadow:0 0 0 0 var(--glow)} 50%{box-shadow:0 0 0 7px transparent} }
+        .tab.active {
+            background-color: var(--editor);
+            color: white;
+            border-top: 1px solid var(--accent);
+        }
 
-.nav-links { display: flex; gap: 28px; list-style: none; }
-.nav-links a {
-  font-size: .72rem; color: var(--muted);
-  text-decoration: none; letter-spacing: .08em; text-transform: uppercase;
-  transition: color .2s;
-}
-.nav-links a:hover { color: var(--accent3); }
+        .tab:not(.active) {
+            background-color: #121212;
+        }
 
-/* hamburger */
-.hamburger {
-  display: none; flex-direction: column; gap: 5px;
-  background: none; border: none; cursor: pointer; padding: 4px;
-}
-.hamburger span {
-  display: block; width: 22px; height: 1.5px;
-  background: var(--muted); border-radius: 2px;
-  transition: .3s;
-}
-.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 10px; height: 10px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; border: 2px solid transparent; background-clip: content-box; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; background-clip: content-box; }
 
-/* mobile nav drawer */
-.nav-drawer {
-  display: none; position: fixed;
-  top: 57px; left: 0; right: 0; z-index: 99;
-  background: rgba(7,7,26,.97);
-  border-bottom: 1px solid var(--border);
-  padding: 24px 28px;
-  flex-direction: column; gap: 20px;
-}
-.nav-drawer.open { display: flex; }
-.nav-drawer a {
-  font-size: .82rem; color: var(--muted);
-  text-decoration: none; letter-spacing: .08em; text-transform: uppercase;
-  transition: color .2s;
-}
-.nav-drawer a:hover { color: var(--accent3); }
+        .terminal-transition {
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-/* ── Layout helpers ── */
-.wrapper { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; }
-section  { position: relative; z-index: 1; padding: 80px 40px; max-width: 960px; margin: 0 auto; }
+        #terminal-section.minimized #terminal-body {
+            display: none;
+        }
 
-.divider {
-  position: relative; z-index: 1;
-  width: 100%; max-width: 960px; height: 1px; margin: 0 auto;
-  background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
-}
+        #terminal-section.minimized {
+            height: 36px !important;
+        }
 
-/* ── Labels & titles ── */
-.section-label {
-  font-size: .65rem; letter-spacing: .22em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 12px;
-}
-.section-title {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-  font-weight: 800; color: var(--text);
-  line-height: 1.1; margin-bottom: 28px;
-}
+        .terminal-toggle-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
 
-/* ── Buttons ── */
-.btn-primary {
-  display: inline-block;
-  padding: 12px 28px; border-radius: 999px;
-  background: var(--accent); color: #fff;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: .78rem; font-weight: 500;
-  text-decoration: none; border: none; cursor: none;
-  transition: transform .2s, box-shadow .2s;
-  box-shadow: 0 0 24px var(--glow);
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 44px var(--glow); }
-.btn-outline {
-  display: inline-block;
-  padding: 12px 28px; border-radius: 999px;
-  background: transparent; color: var(--text);
-  border: 1px solid var(--border);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: .78rem; font-weight: 500;
-  text-decoration: none; cursor: none;
-  transition: border-color .2s, background .2s;
-}
-.btn-outline:hover { border-color: var(--accent2); background: rgba(150,215,235,.06); }
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.7); border-color: rgba(0, 255, 157, 0.3); }
+            50% { box-shadow: 0 0 20px 5px rgba(0, 255, 157, 0.5); border-color: rgba(0, 255, 157, 0.8); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.7); border-color: rgba(0, 255, 157, 0.3); }
+        }
+        .animate-pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
 
-/* ── Hero ── */
-.hero {
-  position: relative; z-index: 1;
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  justify-content: center; align-items: flex-start;
-  padding: 100px 40px 70px;
-  max-width: 960px; margin: 0 auto;
-}
-.hero-tag {
-  font-size: .68rem; letter-spacing: .16em; text-transform: uppercase;
-  color: var(--accent);
-  border: 1px solid var(--border);
-  padding: 5px 13px; border-radius: 999px;
-  margin-bottom: 28px;
-  background: rgba(150,215,235,.06);
-  opacity: 0; animation: fadeUp .6s .2s forwards;
-  display: inline-flex; align-items: center; gap: 8px;
-}
-.hero-tag::before {
-  content: ''; width: 6px; height: 6px;
-  border-radius: 50%; background: var(--accent);
-  animation: pulse 2s infinite;
-}
-.hero h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(2rem, 5.5vw, 3.6rem);
-  font-weight: 800; line-height: 1.07;
-  color: var(--text);
-  opacity: 0; animation: fadeUp .7s .35s forwards;
-}
-.hero h1 .grad {
-  background: linear-gradient(90deg, #96D7EB, #839CB5);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.hero-sub {
-  margin-top: 20px;
-  font-size: .82rem; color: var(--muted); line-height: 1.85; max-width: 500px;
-  opacity: 0; animation: fadeUp .7s .5s forwards;
-}
-.hero-btns {
-  display: flex; gap: 12px; margin-top: 36px; flex-wrap: wrap;
-  opacity: 0; animation: fadeUp .7s .65s forwards;
-}
-.hero-scroll {
-  position: absolute; bottom: 32px; left: 40px;
-  font-size: .65rem; color: var(--muted); letter-spacing: .12em;
-  text-transform: uppercase;
-  display: flex; align-items: center; gap: 14px;
-  opacity: 0; animation: fadeUp .6s 1s forwards;
-}
-.hero-scroll::before {
-  content: ''; display: block; width: 1px; height: 40px;
-  background: linear-gradient(to bottom, var(--accent), transparent);
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-content {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
 
-/* ── About ── */
-.about-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 40px; align-items: center;
-}
-.about-text p {
-  color: var(--muted); line-height: 1.9;
-  font-size: .8rem; margin-bottom: 14px;
-}
-.about-text p strong { color: var(--accent3); font-weight: 500; }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
 
-.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.stat-card {
-  background: rgba(8,15,30,0.85);
-  border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 20px;
-  transition: border-color .3s, transform .3s;
-}
-.stat-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-.stat-card .num {
-  font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 800;
-  background: linear-gradient(90deg, #96D7EB, #839CB5);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-}
-.stat-card .lbl { font-size: .65rem; color: var(--muted); margin-top: 3px; letter-spacing: .05em; }
-
-/* ── Skills ── */
-.skills-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-  gap: 16px; margin-top: 8px;
-}
-.skill-card {
-  background: rgba(8,15,30,0.85);
-  border: 1px solid var(--border); border-radius: 18px;
-  padding: 22px;
-  transition: border-color .3s, box-shadow .3s, transform .3s;
-}
-.skill-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 32px rgba(150,215,235,.08);
-  transform: translateY(-3px);
-}
-.skill-icon {
-  font-size: 1.1rem; margin-bottom: 12px;
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 40px; height: 40px;
-  background: rgba(150,215,235,.08); border-radius: 10px;
-  border: 1px solid var(--border);
-}
-.skill-card h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: .78rem; font-weight: 700; color: var(--text); margin-bottom: 10px;
-}
-.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag {
-  font-size: .63rem; padding: 3px 9px; border-radius: 999px;
-  border: 1px solid var(--border); color: var(--muted);
-  background: rgba(255,255,255,.03);
-  transition: color .2s, border-color .2s;
-}
-.skill-card:hover .tag { color: var(--accent3); border-color: rgba(150,215,235,.3); }
-
-/* ── Projects ── */
-.projects-grid { display: grid; gap: 20px; margin-top: 8px; }
-
-.project-featured {
-  background: rgba(8,15,30,0.85);
-  border: 1px solid var(--border); border-radius: 22px;
-  padding: 32px;
-  display: grid; grid-template-columns: 1fr 180px;
-  gap: 28px; align-items: start;
-  transition: border-color .3s, box-shadow .3s;
-  position: relative; overflow: hidden;
-}
-.project-featured::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, #96D7EB, #839CB5);
-}
-.project-featured:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 50px rgba(150,215,235,.10);
-}
-.project-badge {
-  font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--accent); padding: 3px 11px; border-radius: 999px;
-  border: 1px solid var(--accent); background: rgba(150,215,235,.06);
-  display: inline-block; margin-bottom: 14px;
-}
-.project-featured h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: 1.25rem; font-weight: 800; color: var(--text); margin-bottom: 10px;
-}
-.project-featured p { color: var(--muted); line-height: 1.8; font-size: .8rem; }
-
-.project-tech { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 16px; }
-.tech-tag {
-  font-size: .65rem; padding: 4px 10px; border-radius: 999px;
-  background: rgba(150,215,235,.08); color: var(--accent3);
-  border: 1px solid rgba(150,215,235,.15);
-}
-.project-links { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
-.project-link {
-  font-size: .72rem; padding: 9px 18px; border-radius: 999px;
-  text-decoration: none; transition: .2s; cursor: none;
-}
-.project-link.primary {
-  background: var(--accent); color: #fff;
-  box-shadow: 0 0 18px var(--glow);
-}
-.project-link.primary:hover { box-shadow: 0 0 36px var(--glow); transform: translateY(-1px); }
-.project-link.ghost {
-  border: 1px solid var(--border); color: var(--muted);
-}
-.project-link.ghost:hover { border-color: var(--accent2); color: var(--accent3); }
-
-.project-visual {
-  background: #282a36; border: 1px solid rgba(98,114,164,0.4);
-  border-radius: 14px; padding: 16px; flex-shrink: 0;
-}
-.code-preview { font-size: .6rem; line-height: 1.75; color: #f8f8f2; }
-.code-preview .kw  { color: #ff80bf; }
-.code-preview .str { color: #ffca80; }
-.code-preview .ann { color: #80ffea; }
-.code-preview .fn  { color: #8aff80; }
-.code-preview .tp  { color: #9580ff; }
-
-.projects-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.project-small {
-  background: rgba(8,15,30,0.85);
-  border: 1px solid var(--border); border-radius: 18px; padding: 22px 24px;
-  transition: border-color .3s, transform .3s;
-}
-.project-small:hover { border-color: var(--accent); transform: translateY(-3px); }
-.project-small h3 {
-  font-family: 'Syne', sans-serif;
-  font-size: .9rem; font-weight: 700; color: var(--text); margin-bottom: 6px;
-}
-.project-small p { color: var(--muted); font-size: .75rem; line-height: 1.7; }
-
-/* ── Contact ── */
-.contact-box {
-  background: rgba(8,15,30,0.85); border: 1px solid var(--border);
-  border-radius: 24px; padding: 52px 40px;
-  text-align: center; position: relative; overflow: hidden;
-}
-.contact-box::after {
-  content: ''; position: absolute; inset: -1px; border-radius: 24px;
-  background: linear-gradient(135deg, rgba(150,215,235,.15), rgba(131,156,181,.08), transparent 60%);
-  pointer-events: none; z-index: 0;
-}
-.contact-box > * { position: relative; z-index: 1; }
-.contact-box h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-  font-weight: 800; color: var(--text); margin-bottom: 12px;
-}
-.contact-box p {
-  color: var(--muted); max-width: 400px; margin: 0 auto 28px;
-  line-height: 1.8; font-size: .8rem;
-}
-
-/* social icons row */
-.social-row {
-  display: flex; justify-content: center; gap: 14px; margin-top: 20px;
-}
-.social-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 9px 20px 9px 16px; border-radius: 999px;
-  border: 1px solid var(--border); color: var(--muted);
-  font-family: 'JetBrains Mono', monospace; font-size: .7rem;
-  text-decoration: none; transition: .2s; cursor: none;
-  overflow: visible;
-}
-.social-btn svg { flex-shrink: 0; display: block; }
-.social-btn:hover { border-color: var(--accent2); color: var(--accent3); background: rgba(150,215,235,.06); }
-
-/* ── Footer ── */
-footer {
-  position: relative; z-index: 1;
-  border-top: 1px solid var(--border);
-  padding: 24px 40px;
-  display: flex; align-items: center; justify-content: space-between;
-  color: var(--muted); font-size: .65rem;
-}
-
-/* ── Animations ── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.reveal { opacity: 0; transform: translateY(26px); transition: opacity .55s ease, transform .55s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.d1 { transition-delay: .1s; }
-.d2 { transition-delay: .2s; }
-.d3 { transition-delay: .3s; }
-
-/* ── Responsive ── */
-@media (max-width: 680px) {
-  nav { padding: 14px 20px; }
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-
-  .hero { padding: 90px 20px 60px; min-height: 90vh; }
-  .hero-scroll { display: none; }
-  section { padding: 60px 20px; }
-
-  .about-grid      { grid-template-columns: 1fr; gap: 28px; }
-  .about-stats     { grid-template-columns: 1fr 1fr; }
-
-  .project-featured { grid-template-columns: 1fr; padding: 24px; }
-  .project-visual  { display: none; }
-  .projects-row    { grid-template-columns: 1fr; }
-
-  .contact-box { padding: 36px 20px; }
-  .social-row  { flex-wrap: wrap; }
-
-  footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px; }
-}
-
-@media (min-width: 681px) and (max-width: 900px) {
-  nav { padding: 16px 28px; }
-  .hero, section { padding-left: 28px; padding-right: 28px; }
-  .project-featured { grid-template-columns: 1fr; }
-  .project-visual { display: none; }
-}
-</style>
+        .animate-slide-up {
+            animation: slideUp 0.4s ease-out forwards;
+        }
+    </style>
 </head>
-<body>
-<div class="mesh"></div>
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
+<body class="flex flex-col h-screen select-none">
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo">
-    <span class="logo-dot"></span>André Masoni Fraile
-  </a>
-  <ul class="nav-links">
-    <li><a href="#about">Sobre</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projetos</a></li>
-    <li><a href="#contact">Contato</a></li>
-  </ul>
-  <button class="hamburger" id="hamburger" aria-label="menu">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- MOBILE DRAWER -->
-<nav class="nav-drawer" id="drawer">
-  <a href="#about"    onclick="closeDrawer()">Sobre</a>
-  <a href="#skills"   onclick="closeDrawer()">Skills</a>
-  <a href="#projects" onclick="closeDrawer()">Projetos</a>
-  <a href="#contact"  onclick="closeDrawer()">Contato</a>
-</nav>
-
-<!-- HERO -->
-<div class="wrapper">
-  <div class="hero">
-    <div class="hero-tag">Back-End Developer</div>
-    <h1>
-      Construindo Sistemas<br/>
-      Que <span class="grad">Realmente Funcionam.</span>
-    </h1>
-    <p class="hero-sub">
-      Desenvolvedor Java em ascensão, focado em APIs REST bem estruturadas,
-      seguras e prontas para produção. Crio soluções claras, organizadas e fáceis de manter.
-    </p>
-    <div class="hero-btns">
-      <a href="#projects" class="btn-primary">Ver Projetos</a>
-      <a href="#contact"  class="btn-outline">Contato</a>
-    </div>
-    <div class="hero-scroll">Scroll</div>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- ABOUT -->
-<section id="about">
-  <p class="section-label reveal">Sobre Mim</p>
-  <h2 class="section-title reveal d1">
-    Mais Do Que Código —<br/>
-    <span style="color:var(--accent2)">Decisões Técnicas.</span>
-  </h2>
-  <div class="about-grid">
-    <div class="about-text reveal d2">
-      <p>
-        Sou desenvolvedor <strong>back-end Java</strong> apaixonado por aprender a estruturar
-        sistemas que escalam, que são seguros e que qualquer desenvolvedor consegue
-        entender e manter.
-      </p>
-      <p>
-        Meu foco está em <strong>APIs REST bem projetadas</strong>, com arquitetura
-        em camadas, segurança JWT, tratamento de erros centralizado e testes
-        automatizados — os pilares de qualquer sistema em produção.
-      </p>
-      <p>
-        Não basta o código funcionar. Preciso conseguir explicar
-        <strong>por que</strong> cada decisão foi tomada.
-      </p>
-    </div>
-    <div class="about-stats reveal d3">
-      <div class="stat-card">
-        <div class="num">Java</div>
-        <div class="lbl">linguagem principal</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">REST</div>
-        <div class="lbl">padrão de API</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">JWT</div>
-        <div class="lbl">autenticação stateless</div>
-      </div>
-      <div class="stat-card">
-        <div class="num">TDD</div>
-        <div class="lbl">mentalidade de teste</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- SKILLS -->
-<section id="skills">
-  <p class="section-label reveal">Stack Técnica</p>
-  <h2 class="section-title reveal d1">Skills.</h2>
-  <div class="skills-grid">
-    <div class="skill-card reveal">
-      <div class="skill-icon">☕</div>
-      <h3>Linguagem & Runtime</h3>
-      <div class="skill-tags">
-        <span class="tag">Java 21</span>
-        <span class="tag">JVM</span>
-        <span class="tag">Maven</span>
-      </div>
-    </div>
-    <div class="skill-card reveal d1">
-      <div class="skill-icon">🌱</div>
-      <h3>Spring Ecosystem</h3>
-      <div class="skill-tags">
-        <span class="tag">Spring Boot 3</span>
-        <span class="tag">Spring Security</span>
-        <span class="tag">Spring Data JPA</span>
-      </div>
-    </div>
-    <div class="skill-card reveal d2">
-      <div class="skill-icon">🗄️</div>
-      <h3>Banco de Dados</h3>
-      <div class="skill-tags">
-        <span class="tag">PostgreSQL</span>
-        <span class="tag">Hibernate</span>
-        <span class="tag">JPQL</span>
-      </div>
-    </div>
-    <div class="skill-card reveal d3">
-      <div class="skill-icon">🔐</div>
-      <h3>Segurança</h3>
-      <div class="skill-tags">
-        <span class="tag">JWT</span>
-        <span class="tag">BCrypt</span>
-        <span class="tag">OAuth2</span>
-      </div>
-    </div>
-    <div class="skill-card reveal">
-      <div class="skill-icon">🧪</div>
-      <h3>Testes</h3>
-      <div class="skill-tags">
-        <span class="tag">JUnit 5</span>
-        <span class="tag">Mockito</span>
-        <span class="tag">MockMvc</span>
-      </div>
-    </div>
-    <div class="skill-card reveal d1">
-      <div class="skill-icon">⚙️</div>
-      <h3>Boas Práticas</h3>
-      <div class="skill-tags">
-        <span class="tag">Clean Code</span>
-        <span class="tag">SOLID</span>
-        <span class="tag">REST</span>
-        <span class="tag">Git</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <p class="section-label reveal">Projetos</p>
-  <h2 class="section-title reveal d1">O Que Eu Construí.</h2>
-  <div class="projects-grid">
-
-    <!-- Featured -->
-    <div class="project-featured reveal">
-      <div>
-        <span class="project-badge">★ projeto destaque</span>
-        <h3>Order Management API</h3>
-        <p>
-          Sistema completo de gestão de pedidos B2B — o projeto que carrego com mais
-          orgulho no portfólio. Autenticação JWT stateless, controle de acesso por perfil,
-          fluxo real de status de pedidos e validação de estoque transacional.
-          Cada decisão técnica foi tomada com propósito e pode ser defendida em qualquer entrevista.
-        </p>
-        <div class="project-tech">
-          <span class="tech-tag">Java 21</span>
-          <span class="tech-tag">Spring Boot 3</span>
-          <span class="tech-tag">Spring Security</span>
-          <span class="tech-tag">JWT</span>
-          <span class="tech-tag">JPA</span>
-          <span class="tech-tag">PostgreSQL</span>
-          <span class="tech-tag">Swagger</span>
-          <span class="tech-tag">JUnit 5</span>
+    <!-- Top Bar (Window Controls) -->
+    <div class="h-8 bg-[#1e1e1e] flex items-center justify-between px-4 border-b border-black/20 shrink-0 z-50">
+        <div class="flex items-center gap-2">
+            <div class="md:flex hidden gap-2">
+                <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+            </div>
+            <button onclick="toggleMobileMenu()" class="md:hidden flex p-1 hover:bg-white/10 rounded">
+                <i data-lucide="menu" class="w-4 h-4 text-gray-400"></i>
+            </button>
         </div>
-        <div class="project-links">
-          <a href="https://github.com/sqlandr3" target="_blank" class="project-link primary">GitHub</a>
-          <a href="#" class="project-link ghost">Documentação</a>
-        </div>
-      </div>
-      <div class="project-visual">
-        <div class="code-preview">
-<span class="ann">@RestController</span><br/>
-<span class="ann">@PreAuthorize</span><br/>
-<span class="kw">public class</span> <span class="tp">OrderCtrl</span> {<br/>
-<br/>
-&nbsp;&nbsp;<span class="ann">@PostMapping</span><br/>
-&nbsp;&nbsp;<span class="kw">public</span> <span class="tp">ResponseEntity</span><br/>
-&nbsp;&nbsp;&lt;<span class="tp">OrderResponse</span>&gt;<br/>
-&nbsp;&nbsp;<span class="fn">create</span>(<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="ann">@Valid</span> <span class="tp">OrderReq</span> req,<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="ann">@AuthPrincipal</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="tp">User</span> user) {<br/>
-<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="tp">ResponseEntity</span><br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.status(<span class="str">201</span>)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.body(service<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.<span class="fn">create</span>(req, user));<br/>
-&nbsp;&nbsp;}<br/>
-}
-        </div>
-      </div>
+        <div class="text-[10px] md:text-[11px] text-gray-400 font-medium truncate px-2">André Masoni Fraile - Portfólio Backend</div>
+        <div class="w-8 md:w-12"></div>
     </div>
 
-    <!-- Small cards -->
-    <div class="projects-row">
-      <div class="project-small reveal">
-        <span class="project-badge" style="font-size:.58rem;padding:3px 10px;margin-bottom:10px;display:inline-block;">em desenvolvimento</span>
-        <h3>Auth Service</h3>
-        <p>Microserviço de autenticação com refresh token, blacklist de tokens e rate limiting por IP.</p>
-        <div class="project-tech" style="margin-top:12px;">
-          <span class="tech-tag">Spring Security</span>
-          <span class="tech-tag">Redis</span>
-          <span class="tech-tag">JWT</span>
+    <!-- Main Container -->
+    <div class="flex flex-1 overflow-hidden relative">
+        
+        <!-- Mobile Overlay -->
+        <div id="mobile-overlay" onclick="toggleMobileMenu()" class="fixed inset-0 bg-black/60 z-20 hidden md:hidden transition-opacity duration-300 opacity-0"></div>
+        
+        <!-- Activity Bar (Simplified) -->
+        <div id="activity-bar" class="w-12 bg-[#1e1e1e] flex md:flex flex-col items-center py-4 gap-6 border-r border-black/20 shrink-0 z-40 absolute md:relative top-0 bottom-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <i data-lucide="files" id="activity-files-icon" onclick="toggleSidebar()" class="w-6 h-6 text-[#00ff9d] cursor-pointer transition-colors" title="Explorador"></i>
+            <i data-lucide="mail" onclick="selectFile('contact')" class="w-6 h-6 text-gray-500 hover:text-gray-300 cursor-pointer" title="Contato"></i>
+            <div class="mt-auto mb-2">
+                <i data-lucide="settings" class="w-6 h-6 text-gray-500 hover:text-gray-300 cursor-pointer"></i>
+            </div>
         </div>
-      </div>
-      <div class="project-small reveal d1">
-        <span class="project-badge" style="font-size:.58rem;padding:3px 10px;margin-bottom:10px;display:inline-block;">planejado</span>
-        <h3>Inventory API</h3>
-        <p>API de controle de estoque com eventos assíncronos, notificações de baixo estoque e relatórios.</p>
-        <div class="project-tech" style="margin-top:12px;">
-          <span class="tech-tag">Spring Boot</span>
-          <span class="tech-tag">Kafka</span>
-          <span class="tech-tag">Docker</span>
+
+        <!-- Sidebar (File Explorer) -->
+        <div id="sidebar" class="w-52 md:w-60 bg-[#121212] flex flex-col border-r border-black/40 shrink-0 absolute md:relative top-0 bottom-0 left-0 md:left-0 z-30 transform -translate-x-full md:translate-x-0 transition-all duration-300 ease-in-out overflow-hidden shadow-2xl md:shadow-none">
+            <div class="min-w-[208px] md:min-w-[240px] flex flex-col h-full md:ml-0">
+                <div class="px-4 h-9 flex items-center justify-between text-[11px] font-bold text-gray-500 uppercase tracking-widest border-b border-white/5 md:border-none">
+                    <span>Explorador</span>
+                    <button onclick="toggleSidebar()" class="p-1 hover:bg-white/10 rounded transition-colors text-gray-500 hover:text-gray-300" title="Ocultar Explorador">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            <div class="flex-1 overflow-y-auto">
+                <!-- Project Root -->
+                <div onclick="toggleFolder('project')" class="flex items-center gap-1 px-2 py-1 text-xs font-bold text-white bg-white/5 cursor-pointer hover:bg-white/10">
+                    <i data-lucide="chevron-down" id="arrow-project" class="w-4 h-4 transition-transform"></i>
+                    <span class="uppercase tracking-tighter">PORTFOLIO-BACKEND</span>
+                </div>
+                
+                <div id="folder-project" class="mt-1">
+                    <!-- Resources Folder -->
+                    <div onclick="toggleFolder('resources')" class="flex items-center gap-1 px-4 py-1 text-xs font-bold text-gray-400 cursor-pointer hover:bg-white/5">
+                        <i data-lucide="chevron-down" id="arrow-resources" class="w-4 h-4 transition-transform"></i>
+                        <span>src/main/resources</span>
+                    </div>
+                    
+                    <div id="file-list" class="mt-1">
+                        <!-- Files injected here -->
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</section>
 
-<div class="divider"></div>
+        <!-- Editor Area -->
+        <div class="flex-1 flex flex-col bg-[#1a1a1a] overflow-hidden">
+            
+            <!-- Tabs -->
+            <div class="h-9 bg-[#121212] flex overflow-x-auto no-scrollbar" id="tab-container">
+                <!-- Tabs injected here -->
+            </div>
 
-<!-- CONTACT -->
-<section id="contact">
-  <div class="contact-box reveal">
-    <p class="section-label" style="text-align:center;margin-bottom:10px;">Contato</p>
-    <h2>Vamos conversar?</h2>
-    <p>
-      Aberto a oportunidades, projetos freelance e networking
-      focado em Java e arquitetura de software.
-    </p>
-    <a href="mailto:andremasonifraile@gmail.com" class="btn-primary">
-      Enviar E-mail
-    </a>
-    <div class="social-row">
-      <a href="https://github.com/sqlandr3" target="_blank" class="social-btn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49.99.11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 013-.4c1.02.005 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
-        sqlandr3
-      </a>
-      <a href="https://linkedin.com/in/andré-masoni-fraile" target="_blank" class="social-btn">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="24" height="24" rx="4" fill="currentColor" fill-opacity="0.15"/>
-          <path d="M7.5 9.5H5V19H7.5V9.5Z" fill="currentColor"/>
-          <circle cx="6.25" cy="6.75" r="1.5" fill="currentColor"/>
-          <path d="M13 19H15.5V13.75C15.5 12.5 16.25 11.5 17.5 11.5C18.75 11.5 19 12.5 19 13.75V19H21.5V13C21.5 10.5 20 9 17.75 9C16.5 9 15.5 9.75 15.25 10.5H15V9.5H13V19Z" fill="currentColor"/>
-        </svg>
-        André Masoni
-      </a>
+            <!-- Breadcrumbs -->
+            <div class="h-6 bg-[#1a1a1a] flex items-center px-4 text-[11px] text-gray-500 gap-2 border-b border-black/10 overflow-x-auto no-scrollbar whitespace-nowrap">
+                <i data-lucide="folder" class="w-3 h-3"></i>
+                <span>src</span>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <span>main</span>
+                <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                <span id="breadcrumb-file" class="text-gray-300">README.md</span>
+            </div>
+
+            <!-- Editor Content -->
+            <div class="flex-1 overflow-auto bg-[#1a1a1a] relative" id="editor-content">
+                <!-- Content injected here -->
+            </div>
+
+            <!-- Terminal Area (Adjusted Size) -->
+            <div id="terminal-section" class="h-48 md:h-64 bg-[#0d0d0d] border-t border-white/10 flex flex-col shrink-0 terminal-transition overflow-hidden">
+                <div class="px-4 h-9 flex items-center justify-between border-b border-white/5 bg-[#121212]">
+                    <div class="flex gap-4 md:gap-6 h-full" id="terminal-tabs">
+                        <span onclick="setTerminalTab('terminal')" id="tab-terminal" class="text-[11px] font-bold text-white uppercase tracking-wider border-b-2 border-[#00ff9d] flex items-center cursor-pointer">
+                            Terminal
+                        </span>
+                        <span onclick="setTerminalTab('console')" id="tab-console" class="text-[11px] text-gray-500 uppercase tracking-wider flex items-center cursor-pointer hover:text-gray-300">
+                            <span class="hidden sm:inline">Console de Depuração</span>
+                            <span class="sm:hidden">Console</span>
+                        </span>
+                        <span onclick="setTerminalTab('output')" id="tab-output" class="text-[11px] text-gray-500 uppercase tracking-wider flex items-center cursor-pointer hover:text-gray-300">
+                            <span class="hidden sm:inline">Saída (Logs)</span>
+                            <span class="sm:hidden">Saída</span>
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-3 text-gray-500">
+                        <div onclick="toggleTerminal()" class="terminal-toggle-btn p-1 rounded cursor-pointer transition-all hover:text-white flex items-center gap-1">
+                            <span id="terminal-status-text" class="text-[9px] uppercase font-bold mr-1">Ocultar</span>
+                            <i data-lucide="chevron-down" id="terminal-toggle-icon" class="w-4 h-4 transition-transform duration-300"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 p-4 font-mono text-[12px] text-gray-400 overflow-y-auto" id="terminal-body">
+                    <!-- Terminal content injected here -->
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</section>
 
-<footer>
-  <span>© 2026 — André Masoni | Dev Java</span>
-  <span style="color:var(--accent);">Feito Com Muito ☕ e Spring Boot</span>
-</footer>
+    <!-- Status Bar -->
+    <div class="h-6 bg-[#00ff9d] flex items-center justify-between px-3 text-[11px] font-semibold text-black shrink-0">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-1 hover:bg-black/10 px-1 cursor-pointer">
+                <i data-lucide="git-branch" class="w-3.5 h-3.5"></i> <span class="hidden sm:inline">main*</span>
+            </div>
+            <div class="flex items-center gap-1 hover:bg-black/10 px-1 cursor-pointer">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> 0
+            </div>
+            <div class="hidden sm:flex items-center gap-1 hover:bg-black/10 px-1 cursor-pointer">
+                <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> 0
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="hidden sm:block hover:bg-black/10 px-1 cursor-pointer">Lin 1, Col 1</div>
+            <div class="hover:bg-black/10 px-1 cursor-pointer">UTF-8</div>
+            <div class="hidden xs:flex items-center gap-1 hover:bg-black/10 px-1 cursor-pointer">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Prettier
+            </div>
+        </div>
+    </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Cursor
-const cursor = document.getElementById('cursor');
-const ring   = document.getElementById('cursor-ring');
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top  = e.clientY + 'px';
-  setTimeout(() => {
-    ring.style.left = e.clientX + 'px';
-    ring.style.top  = e.clientY + 'px';
-  }, 75);
-});
-document.querySelectorAll('a, button').forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.transform = 'translate(-50%,-50%) scale(2.2)';
-    cursor.style.background = '#96D7EB';
-    ring.style.opacity = '1';
-    ring.style.transform = 'translate(-50%,-50%) scale(1.4)';
-  });
-  el.addEventListener('mouseleave', () => {
-    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
-    cursor.style.background = '#96D7EB';
-    ring.style.opacity = '.55';
-    ring.style.transform = 'translate(-50%,-50%) scale(1)';
-  });
-});
+    <script>
+        const FILES = [
+            { id: 'readme', name: 'README.md', type: 'md', icon: 'file-text', color: 'text-blue-400' },
+            { id: 'about', name: 'Perfil.java', type: 'java', icon: 'file-code', color: 'text-red-500' },
+            { id: 'skills', name: 'Tecnologias.yaml', type: 'yaml', icon: 'file-text', color: 'text-green-400' },
+            { id: 'experience', name: 'Experiencia.java', type: 'java', icon: 'file-code', color: 'text-red-500' },
+            { id: 'projects', name: 'Projetos.json', type: 'json', icon: 'file-json', color: 'text-[#00ff9d]' },
+            { id: 'contact', name: 'Contato.sh', type: 'sh', icon: 'terminal', color: 'text-gray-400' }
+        ];
 
-// Hamburger
-const hamburger = document.getElementById('hamburger');
-const drawer    = document.getElementById('drawer');
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('open');
-  drawer.classList.toggle('open');
-});
-function closeDrawer() {
-  hamburger.classList.remove('open');
-  drawer.classList.remove('open');
-}
+        let activeFile = 'readme';
+        let openFiles = ['readme'];
+        let sidebarExpanded = { project: true, resources: true };
+        let activeTerminalTab = 'terminal';
+        let terminalMinimized = false;
 
-// Scroll reveal
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+        function toggleTerminal() {
+            terminalMinimized = !terminalMinimized;
+            const section = document.getElementById('terminal-section');
+            const icon = document.getElementById('terminal-toggle-icon');
+            const statusText = document.getElementById('terminal-status-text');
+            
+            if (terminalMinimized) {
+                section.classList.add('minimized');
+                icon.style.transform = 'rotate(180deg)';
+                statusText.innerText = 'Mostrar';
+            } else {
+                section.classList.remove('minimized');
+                icon.style.transform = 'rotate(0deg)';
+                statusText.innerText = 'Ocultar';
+                // Trigger re-render of content to ensure it looks good
+                setTerminalTab(activeTerminalTab);
+            }
+        }
+
+        function toggleFolder(folder) {
+            sidebarExpanded[folder] = !sidebarExpanded[folder];
+            const arrow = document.getElementById(`arrow-${folder}`);
+            const content = folder === 'project' ? document.getElementById('folder-project') : document.getElementById('file-list');
+            
+            if (sidebarExpanded[folder]) {
+                arrow.style.transform = 'rotate(0deg)';
+                content.classList.remove('hidden');
+            } else {
+                arrow.style.transform = 'rotate(-90deg)';
+                content.classList.add('hidden');
+            }
+        }
+
+        function renderFileList() {
+            const container = document.getElementById('file-list');
+            container.innerHTML = FILES.map(file => `
+                <div onclick="selectFile('${file.id}')" class="sidebar-item ${activeFile === file.id ? 'active' : ''} flex items-center gap-2 px-4 md:px-8 py-1 text-xs text-gray-400 hover:bg-white/5 cursor-pointer transition-colors">
+                    <i data-lucide="${file.icon}" class="w-4 h-4 ${file.color}"></i>
+                    <span>${file.name}</span>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function renderTabs() {
+            const container = document.getElementById('tab-container');
+            container.innerHTML = openFiles.map(id => {
+                const file = FILES.find(f => f.id === id);
+                return `
+                    <div onclick="selectFile('${id}')" class="tab ${activeFile === id ? 'active' : ''} flex items-center gap-2 px-3 h-full border-r border-black/20 text-xs text-gray-400 cursor-pointer min-w-[100px] md:min-w-[140px] transition-all group">
+                        <i data-lucide="${file.icon}" class="w-4 h-4 ${file.color}"></i>
+                        <span class="flex-1 truncate">${file.name}</span>
+                        <i onclick="event.stopPropagation(); closeFile('${id}')" data-lucide="x" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 hover:bg-white/10 rounded p-0.5"></i>
+                    </div>
+                `;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function selectFile(id) {
+            activeFile = id;
+            if (!openFiles.includes(id)) openFiles.push(id);
+            document.getElementById('breadcrumb-file').innerText = FILES.find(f => f.id === id).name;
+            
+            // Close mobile menu if open
+            const sidebar = document.getElementById('sidebar');
+            if (window.innerWidth < 768 && !sidebar.classList.contains('-translate-x-full')) {
+                toggleMobileMenu();
+            }
+
+            renderFileList();
+            renderTabs();
+            renderContent();
+        }
+
+        function toggleMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const activityBar = document.getElementById('activity-bar');
+            const filesIcon = document.getElementById('activity-files-icon');
+            const overlay = document.getElementById('mobile-overlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-12');
+                activityBar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.add('opacity-100'), 10);
+                filesIcon.classList.add('text-[#00ff9d]');
+                filesIcon.classList.remove('text-gray-500');
+            } else {
+                sidebar.classList.add('-translate-x-full');
+                sidebar.classList.remove('translate-x-12');
+                activityBar.classList.add('-translate-x-full');
+                overlay.classList.remove('opacity-100');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+                filesIcon.classList.remove('text-[#00ff9d]');
+                filesIcon.classList.add('text-gray-500');
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const filesIcon = document.getElementById('activity-files-icon');
+            
+            if (window.innerWidth < 768) {
+                toggleMobileMenu();
+                return;
+            }
+
+            if (sidebar.classList.contains('md:w-0')) {
+                sidebar.classList.remove('md:w-0', 'md:opacity-0', 'md:border-none');
+                sidebar.classList.add('md:w-60', 'md:opacity-100');
+                filesIcon.classList.add('text-[#00ff9d]');
+                filesIcon.classList.remove('text-gray-500');
+            } else {
+                sidebar.classList.remove('md:w-60', 'md:opacity-100');
+                sidebar.classList.add('md:w-0', 'md:opacity-0', 'md:border-none');
+                filesIcon.classList.remove('text-[#00ff9d]');
+                filesIcon.classList.add('text-gray-500');
+            }
+        }
+
+        function closeFile(id) {
+            if (openFiles.length === 1) return;
+            openFiles = openFiles.filter(f => f !== id);
+            if (activeFile === id) activeFile = openFiles[0];
+            selectFile(activeFile);
+        }
+
+        function wrapCode(lines) {
+            return `
+                <div class="font-mono text-[12px] md:text-[13px] py-4 overflow-x-auto">
+                    ${lines.map((line, i) => `
+                        <div class="code-line hover:bg-white/5 px-4">
+                            <span class="line-number">${i + 1}</span>
+                            <span class="syntax-default">${line}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderContent() {
+            const container = document.getElementById('editor-content');
+            let content = '';
+
+            switch(activeFile) {
+                case 'readme':
+                    content = `
+                        <div class="p-4 md:p-8 max-w-4xl mx-auto fade-in-content">
+                            <!-- Hero Section -->
+                            <div class="flex flex-col md:flex-row gap-6 md:gap-8 items-center mb-8 md:mb-12 border-b border-white/5 pb-8 md:pb-12">
+                                <div class="relative group">
+                                    <div class="absolute -inset-1 bg-gradient-to-r from-[#00ff9d] to-blue-500 rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
+                                    
+                                    <!-- FOTO DE PERFIL -->
+                                    <div class="relative w-24 h-24 md:w-32 md:h-32 rounded-full bg-[#1e1e1e] border-2 border-[#00ff9d]/30 flex items-center justify-center overflow-hidden animate-pulse-glow">
+                                        <!-- INSTRUÇÃO: 
+                                             1. Salve sua foto como 'perfil.jpg' na mesma pasta deste arquivo index.html
+                                             2. Troque o src abaixo para 'perfil.jpg'
+                                             3. Se preferir, use um link direto de imagem (ex: do Imgur ou GitHub) -->
+                                        <img src="andremasoni.jpg" class="w-full h-full object-cover" alt="André Masoni">
+                                    </div>
+
+                                    <div class="absolute bottom-1 right-1 w-6 h-6 bg-[#00ff9d] rounded-full border-4 border-[#1a1a1a] flex items-center justify-center">
+                                        <div class="w-2 h-2 bg-black rounded-full animate-pulse"></div>
+                                    </div>
+                                </div>
+                                <div class="text-center md:text-left">
+                                    <h1 class="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">André Masoni Fraile</h1>
+                                    <p class="text-[#00ff9d] font-mono text-sm mb-4">@sqlandr3 • Java Backend Developer</p>
+                                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
+                                        <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-gray-400 uppercase tracking-wider">Spring Boot</span>
+                                        <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-gray-400 uppercase tracking-wider">APIs REST</span>
+                                        <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-gray-400 uppercase tracking-wider">JWT Security</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bento Grid Style Info -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+                                <div class="p-5 bg-[#252525]/50 border border-white/5 rounded-xl hover:border-[#00ff9d]/30 transition-colors group">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="p-2 bg-red-500/10 rounded-lg text-red-500">
+                                            <i data-lucide="code-2" class="w-5 h-5"></i>
+                                        </div>
+                                        <h3 class="font-semibold text-white">Mais Do Que Código</h3>
+                                    </div>
+                                    <p class="text-sm text-gray-400 leading-relaxed">
+                                        Focado em estruturar sistemas que <span class="text-white">escalam</span> e são <span class="text-white">seguros</span>. Não basta funcionar, cada decisão técnica deve ser defensável.
+                                    </p>
+                                </div>
+
+                                <div class="p-5 bg-[#252525]/50 border border-white/5 rounded-xl hover:border-[#00ff9d]/30 transition-colors group">
+                                    <div class="flex items-center gap-3 mb-3">
+                                        <div class="p-2 bg-blue-500/10 rounded-lg text-blue-500">
+                                            <i data-lucide="database" class="w-5 h-5"></i>
+                                        </div>
+                                        <h3 class="font-semibold text-white">Arquitetura em Camadas</h3>
+                                    </div>
+                                    <p class="text-sm text-gray-400 leading-relaxed">
+                                        Ascensão em APIs REST com <span class="text-white">segurança JWT</span>, tratamento de erros centralizado e <span class="text-white">testes automatizados</span>.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Quick Links / Navigation -->
+                            <div class="space-y-3">
+                                <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-[0.2em] mb-4">Explorar Documentação</h3>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <button onclick="selectFile('about')" class="flex items-center justify-between p-3 bg-[#1e1e1e] border border-white/5 rounded-lg hover:bg-[#252525] transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="file-code" class="w-4 h-4 text-red-500"></i>
+                                            <span class="text-sm text-gray-300">Perfil.java</span>
+                                        </div>
+                                        <i data-lucide="arrow-right" class="w-3 h-3 text-gray-600 group-hover:text-[#00ff9d] group-hover:translate-x-1 transition-all"></i>
+                                    </button>
+                                    <button onclick="selectFile('skills')" class="flex items-center justify-between p-3 bg-[#1e1e1e] border border-white/5 rounded-lg hover:bg-[#252525] transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="cpu" class="w-4 h-4 text-green-400"></i>
+                                            <span class="text-sm text-gray-300">Tecnologias.yaml</span>
+                                        </div>
+                                        <i data-lucide="arrow-right" class="w-3 h-3 text-gray-600 group-hover:text-[#00ff9d] group-hover:translate-x-1 transition-all"></i>
+                                    </button>
+                                    <button onclick="selectFile('projects')" class="flex items-center justify-between p-3 bg-[#1e1e1e] border border-white/5 rounded-lg hover:bg-[#252525] transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="layout" class="w-4 h-4 text-[#00ff9d]"></i>
+                                            <span class="text-sm text-gray-300">Projetos.json</span>
+                                        </div>
+                                        <i data-lucide="arrow-right" class="w-3 h-3 text-gray-600 group-hover:text-[#00ff9d] group-hover:translate-x-1 transition-all"></i>
+                                    </button>
+                                    <button onclick="selectFile('contact')" class="flex items-center justify-between p-3 bg-[#1e1e1e] border border-white/5 rounded-lg hover:bg-[#252525] transition-all group">
+                                        <div class="flex items-center gap-3">
+                                            <i data-lucide="mail" class="w-4 h-4 text-gray-400"></i>
+                                            <span class="text-sm text-gray-300">Contato.sh</span>
+                                        </div>
+                                        <i data-lucide="arrow-right" class="w-3 h-3 text-gray-600 group-hover:text-[#00ff9d] group-hover:translate-x-1 transition-all"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    break;
+
+                case 'about':
+                    content = wrapCode([
+                        `<span class="syntax-keyword">package</span> <span class="syntax-default">com.andre.perfil;</span>`,
+                        ``,
+                        `<span class="syntax-keyword">import</span> <span class="syntax-default">java.util.List;</span>`,
+                        ``,
+                        `<span class="syntax-comment">/**</span>`,
+                        `<span class="syntax-comment"> * Desenvolvedor Java em ascensão, focado em APIs REST bem estruturadas.</span>`,
+                        `<span class="syntax-comment"> */</span>`,
+                        `<span class="syntax-keyword">public class</span> <span class="syntax-function">AndreMasoni</span> {`,
+                        `    <span class="syntax-keyword">private final</span> String nome = <span class="syntax-string">"André Masoni Fraile"</span>;`,
+                        `    <span class="syntax-keyword">private final</span> String cargo = <span class="syntax-string">"Java Backend Developer"</span>;`,
+                        ``,
+                        `    <span class="syntax-keyword">public</span> String <span class="syntax-function">getMissao</span>() {`,
+                        `        <span class="syntax-keyword">return</span> <span class="syntax-string">"Construir sistemas que realmente funcionam e são fáceis de manter."</span>;`,
+                        `    }`,
+                        ``,
+                        `    <span class="syntax-keyword">public</span> List&lt;String&gt; <span class="syntax-function">getFocoTecnico</span>() {`,
+                        `        <span class="syntax-keyword">return</span> List.<span class="syntax-function">of</span>(<span class="syntax-string">"Segurança JWT"</span>, <span class="syntax-string">"Arquitetura em Camadas"</span>, <span class="syntax-string">"Testes Automatizados"</span>);`,
+                        `    }`,
+                        `}`
+                    ]);
+                    break;
+
+                case 'skills':
+                    content = wrapCode([
+                        `<span class="syntax-variable">skills:</span>`,
+                        `  <span class="syntax-variable">linguagem_runtime:</span>`,
+                        `    - <span class="syntax-string">Java</span>`,
+                        `  <span class="syntax-variable">spring_ecosystem:</span>`,
+                        `    - <span class="syntax-string">Spring Boot</span>`,
+                        `    - <span class="syntax-string">Spring Security</span>`,
+                        `    - <span class="syntax-string">Spring Data JPA</span>`,
+                        `  <span class="syntax-variable">banco_de_dados:</span>`,
+                        `    - <span class="syntax-string">PostgreSQL</span>`,
+                        `  <span class="syntax-variable">seguranca:</span>`,
+                        `    - <span class="syntax-string">JWT (Stateless)</span>`,
+                        `  <span class="syntax-variable">boas_praticas:</span>`,
+                        `    - <span class="syntax-string">Clean Code</span>`,
+                        `    - <span class="syntax-string">SOLID</span>`,
+                        `    - <span class="syntax-string">Arquitetura em Camadas</span>`
+                    ]);
+                    break;
+
+                case 'experience':
+                    content = wrapCode([
+                        `<span class="syntax-keyword">public class</span> <span class="syntax-function">Trajetoria</span> {`,
+                        `    <span class="syntax-comment">// Foco em desenvolvimento Backend Java</span>`,
+                        `    <span class="syntax-keyword">public void</span> <span class="syntax-function">objetivoProfissional</span>() {`,
+                        `        String foco = <span class="syntax-string">"APIs REST prontas para produção"</span>;`,
+                        `        <span class="syntax-comment">// Buscando oportunidades para aplicar arquitetura escalável e segura.</span>`,
+                        `    }`,
+                        `}`
+                    ]);
+                    break;
+
+                case 'projects':
+                    content = wrapCode([
+                        `<span class="syntax-default">[</span>`,
+                        `  {`,
+                        `    <span class="syntax-variable">"nome"</span>: <span class="syntax-string">"Order Management API"</span>,`,
+                        `    <span class="syntax-variable">"descricao"</span>: <span class="syntax-string">"Gestão de pedidos B2B com JWT, controle de acesso e validação de estoque."</span>,`,
+                        `    <span class="syntax-variable">"destaque"</span>: <span class="syntax-string">"Arquitetura stateless e fluxo real de status."</span>`,
+                        `  },`,
+                        `  {`,
+                        `    <span class="syntax-variable">"nome"</span>: <span class="syntax-string">"Auth Service"</span>,`,
+                        `    <span class="syntax-variable">"descricao"</span>: <span class="syntax-string">"Microserviço de autenticação com refresh token e rate limiting."</span>`,
+                        `  },`,
+                        `  {`,
+                        `    <span class="syntax-variable">"nome"</span>: <span class="syntax-string">"Inventory API"</span>,`,
+                        `    <span class="syntax-variable">"descricao"</span>: <span class="syntax-string">"Controle de estoque com eventos assíncronos e notificações."</span>`,
+                        `  }`,
+                        `<span class="syntax-default">]</span>`
+                    ]);
+                    break;
+
+                case 'contact':
+                    content = wrapCode([
+                        `<span class="syntax-comment">#!/bin/bash</span>`,
+                        ``,
+                        `<span class="syntax-variable">EMAIL</span>=<a href="mailto:andremasonifraile@gmail.com" class="hover:underline transition-all"><span class="syntax-string">"andremasonifraile@gmail.com"</span></a>`,
+                        `<span class="syntax-variable">GITHUB</span>=<a href="https://github.com/sqlandr3" target="_blank" class="hover:underline transition-all"><span class="syntax-string">"github.com/sqlandr3"</span></a>`,
+                        `<span class="syntax-variable">LINKEDIN</span>=<a href="https://www.linkedin.com/in/andre-masoni" target="_blank" class="hover:underline transition-all"><span class="syntax-string">"linkedin.com/in/andre-masoni"</span></a>`,
+                        ``,
+                        `<span class="syntax-keyword">echo</span> <span class="syntax-string">"Conectando com André Masoni..."</span>`,
+                        `<span class="syntax-keyword">echo</span> <span class="syntax-string">"Status: Aberto a novas oportunidades e networking."</span>`
+                    ]);
+                    break;
+            }
+
+            if (activeFile === 'readme') {
+                container.innerHTML = content;
+            } else {
+                container.innerHTML = `<div class="fade-in-content">${content}</div>`;
+            }
+            lucide.createIcons();
+        }
+
+        // Terminal Logic
+        const terminalBody = document.getElementById('terminal-body');
+        const bootLogs = [
+            "&gt; andre-portfolio@1.0.0 start",
+            "&gt; spring-boot:run",
+            "",
+            "  .   ____          _            __ _ _",
+            " /\\\\ / ___'_ __ _ _(_)_ __  __ _ \\ \\ \\ \\",
+            "( ( )\\___ | '_ | '_| | '_ \\/ _` | \\ \\ \\ \\",
+            " \\\\/  ___)| |_)| | | | | || (_| |  ) ) ) )",
+            "  '  |____| .__|_| |_|_| |_\\__, | / / / /",
+            " =========|_|==============|___/=/_/_/_/",
+            " :: Spring Boot ::                (v3.2.0)",
+            "",
+            "2026-03-19 15:36:13 INFO 1 --- [main] c.a.p.PortfolioApplication : Starting PortfolioApplication...",
+            "2026-03-19 15:36:14 INFO 1 --- [main] c.a.p.PortfolioApplication : No active profile set, falling back to default profiles: default",
+            "2026-03-19 15:36:15 INFO 1 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)",
+            "2026-03-19 15:36:16 INFO 1 --- [main] c.a.p.PortfolioApplication : Started PortfolioApplication in 2.84 seconds (JVM running for 3.2)",
+            "&gt; Conexão estabelecida. Sistema pronto para navegação."
+        ];
+
+        function setTerminalTab(tab) {
+            activeTerminalTab = tab;
+            
+            // Update Tab UI
+            ['terminal', 'console', 'output'].forEach(t => {
+                const el = document.getElementById(`tab-${t}`);
+                if (t === tab) {
+                    el.classList.add('text-white', 'border-b-2', 'border-[#00ff9d]');
+                    el.classList.remove('text-gray-500');
+                } else {
+                    el.classList.remove('text-white', 'border-b-2', 'border-[#00ff9d]');
+                    el.classList.add('text-gray-500');
+                }
+            });
+
+            // Update Content
+            if (tab === 'terminal') {
+                terminalBody.innerHTML = bootLogs.map(log => `<div>${log}</div>`).join('');
+            } else if (tab === 'console') {
+                terminalBody.innerHTML = `
+                    <div class="text-blue-400"># Console de Depuração Ativo</div>
+                    <div>&gt; andreMasoni.getSkills()</div>
+                    <div class="text-green-400">["Java", "Spring", "Docker", "AWS"]</div>
+                    <div>&gt; andreMasoni.isAvailable()</div>
+                    <div class="text-green-400">true</div>
+                    <div class="flex items-center gap-2 mt-2">
+                        <span class="text-[#00ff9d]">&gt;</span>
+                        <span class="w-2 h-4 bg-gray-500 cursor-blink"></span>
+                    </div>
+                `;
+            } else if (tab === 'output') {
+                terminalBody.innerHTML = `
+                    <div class="text-gray-500">[2026-03-19 15:40:35] Compilação concluída com sucesso.</div>
+                    <div class="text-gray-500">[2026-03-19 15:40:36] Verificando integridade dos microserviços...</div>
+                    <div class="text-green-500">[OK] Serviço de Autenticação</div>
+                    <div class="text-green-500">[OK] Serviço de Pagamentos</div>
+                    <div class="text-green-500">[OK] Gateway de API</div>
+                    <div class="text-gray-500">[2026-03-19 15:40:37] Sistema em estado saudável.</div>
+                `;
+            }
+            terminalBody.scrollTop = terminalBody.scrollHeight;
+        }
+
+        function initTerminal() {
+            setTerminalTab('terminal');
+            setInterval(() => {
+                if (activeTerminalTab === 'terminal') {
+                    const time = new Date().toISOString().replace('T', ' ').substring(0, 19);
+                    const log = `<div>${time} INFO 1 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet : Completed 200 OK</div>`;
+                    terminalBody.innerHTML += log;
+                    terminalBody.scrollTop = terminalBody.scrollHeight;
+                }
+            }, 5000);
+        }
+
+        // Keyboard Shortcuts
+        window.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+                e.preventDefault();
+                toggleSidebar();
+            }
+        });
+
+        // Initialize
+        renderFileList();
+        renderTabs();
+        renderContent();
+        initTerminal();
+    </script>
 </body>
 </html>
