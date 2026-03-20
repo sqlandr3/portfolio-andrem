@@ -4,6 +4,16 @@ Este repositório contém o código-fonte do meu portfólio profissional como de
 
 ---
 
+## 📄 Copyright
+
+© 2026 André Masoni Fraile. Todos os direitos reservados.
+
+Este projeto é de uso exclusivamente pessoal e não está autorizado para cópia, distribuição, modificação ou reutilização sem permissão explícita do autor.
+
+O código, design e conteúdo apresentados neste repositório são protegidos por direitos autorais.
+
+---
+
 ## 📌 Sobre
 
 Sou desenvolvedor back-end com foco na construção de APIs REST seguras, organizadas e prontas para produção.  
@@ -27,16 +37,6 @@ Este portfólio foi desenvolvido com o objetivo de apresentar minhas habilidades
 Acesse o portfólio online:
 
 👉 https://sqlandr3.github.io/portfolio-andrem/
-
----
-
-## 📄 Copyright
-
-© 2026 André Masoni Fraile. Todos os direitos reservados.
-
-Este projeto é de uso exclusivamente pessoal e não está autorizado para cópia, distribuição, modificação ou reutilização sem permissão explícita do autor.
-
-O código, design e conteúdo apresentados neste repositório são protegidos por direitos autorais.
 
 ---
 
