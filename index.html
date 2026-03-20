@@ -117,7 +117,12 @@
         ::-webkit-scrollbar-thumb:hover { background: #444; background-clip: content-box; }
 
         .terminal-transition {
-            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+        }
+
+        #terminal-section {
+            background-color: #0d0d0d;
+            box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
         }
 
         #terminal-section.minimized #terminal-body {
@@ -128,9 +133,51 @@
             height: 36px !important;
         }
 
+        .terminal-tab {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .terminal-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #00ff9d;
+            box-shadow: 0 0 8px rgba(0, 255, 157, 0.5);
+        }
+
         .terminal-toggle-btn:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
+
+        .terminal-prompt {
+            color: #00ff9d;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background-color: #00ff9d;
+            vertical-align: middle;
+            animation: blink 1s step-end infinite;
+            box-shadow: 0 0 5px rgba(0, 255, 157, 0.5);
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .log-info { color: #00ff9d; }
+        .log-warn { color: #ffbd2e; }
+        .log-error { color: #ff5f56; }
+        .log-timestamp { color: #666; }
+        .log-class { color: #4a9eff; }
 
         @keyframes pulse-glow {
             0% { box-shadow: 0 0 0 0 rgba(0, 255, 157, 0.7); border-color: rgba(0, 255, 157, 0.3); }
@@ -742,22 +789,11 @@
         // Terminal Logic
         const terminalBody = document.getElementById('terminal-body');
         const bootLogs = [
-            "&gt; andre-portfolio@1.0.0 start",
-            "&gt; spring-boot:run",
-            "",
-            "  .   ____          _            __ _ _",
-            " /\\\\ / ___'_ __ _ _(_)_ __  __ _ \\ \\ \\ \\",
-            "( ( )\\___ | '_ | '_| | '_ \\/ _` | \\ \\ \\ \\",
-            " \\\\/  ___)| |_)| | | | | || (_| |  ) ) ) )",
-            "  '  |____| .__|_| |_|_| |_\\__, | / / / /",
-            " =========|_|==============|___/=/_/_/_/",
-            " :: Spring Boot ::                (v3.2.0)",
-            "",
-            "2026-03-19 15:36:13 INFO 1 --- [main] c.a.p.PortfolioApplication : Starting PortfolioApplication...",
-            "2026-03-19 15:36:14 INFO 1 --- [main] c.a.p.PortfolioApplication : No active profile set, falling back to default profiles: default",
-            "2026-03-19 15:36:15 INFO 1 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)",
-            "2026-03-19 15:36:16 INFO 1 --- [main] c.a.p.PortfolioApplication : Started PortfolioApplication in 2.84 seconds (JVM running for 3.2)",
-            "&gt; Conexão estabelecida. Sistema pronto para navegação."
+            "<span class='log-timestamp'>[2026-03-20 14:47:47]</span> <span class='log-info'>INFO</span> <span class='log-class'>c.a.p.PortfolioApplication</span> : Starting PortfolioApplication...",
+            "<span class='log-timestamp'>[2026-03-20 14:47:48]</span> <span class='log-info'>INFO</span> <span class='log-class'>c.a.p.PortfolioApplication</span> : No active profile set, falling back to default profiles: default",
+            "<span class='log-timestamp'>[2026-03-20 14:47:49]</span> <span class='log-info'>INFO</span> <span class='log-class'>o.s.b.w.embedded.tomcat.TomcatWebServer</span> : Tomcat initialized with port 8080 (http)",
+            "<span class='log-timestamp'>[2026-03-20 14:47:50]</span> <span class='log-info'>INFO</span> <span class='log-class'>c.a.p.PortfolioApplication</span> : Started PortfolioApplication in 2.84 seconds",
+            "<span class='text-white'>&gt; Conexão estabelecida. Sistema pronto para navegação.</span>"
         ];
 
         function setTerminalTab(tab) {
@@ -767,39 +803,90 @@
             ['terminal', 'console', 'output'].forEach(t => {
                 const el = document.getElementById(`tab-${t}`);
                 if (t === tab) {
-                    el.classList.add('text-white', 'border-b-2', 'border-[#00ff9d]');
+                    el.classList.add('text-white', 'terminal-tab', 'active');
                     el.classList.remove('text-gray-500');
                 } else {
-                    el.classList.remove('text-white', 'border-b-2', 'border-[#00ff9d]');
+                    el.classList.remove('text-white', 'terminal-tab', 'active');
                     el.classList.add('text-gray-500');
                 }
             });
 
             // Update Content
             if (tab === 'terminal') {
-                terminalBody.innerHTML = bootLogs.map(log => `<div>${log}</div>`).join('');
+                terminalBody.innerHTML = `
+                    <div class="space-y-1">
+                        ${bootLogs.map(log => `<div>${log}</div>`).join('')}
+                        <div class="flex items-center mt-4 pt-2 border-t border-white/5">
+                            <span class="terminal-prompt">andre@portfolio:~$</span>
+                            <span class="text-gray-300">ls -la</span>
+                            <span class="terminal-cursor ml-1"></span>
+                        </div>
+                    </div>
+                `;
             } else if (tab === 'console') {
                 terminalBody.innerHTML = `
-                    <div class="text-blue-400"># Console de Depuração Ativo</div>
-                    <div>&gt; andreMasoni.getSkills()</div>
-                    <div class="text-green-400">["Java", "Spring", "Docker", "AWS"]</div>
-                    <div>&gt; andreMasoni.isAvailable()</div>
-                    <div class="text-green-400">true</div>
-                    <div class="flex items-center gap-2 mt-2">
-                        <span class="text-[#00ff9d]">&gt;</span>
-                        <span class="w-2 h-4 bg-gray-500 cursor-blink"></span>
+                    <div class="space-y-2">
+                        <div class="text-blue-400 font-bold flex items-center gap-2">
+                            <i data-lucide="info" class="w-3 h-3"></i>
+                            Console de Depuração Ativo (v1.0.4)
+                        </div>
+                        <div class="pl-4 border-l border-blue-500/20">
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-500">In:</span>
+                                <span class="text-white">andreMasoni.getSkills()</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-500">Out:</span>
+                                <span class="text-[#00ff9d]">["Java", "Spring", "Docker", "AWS"]</span>
+                            </div>
+                        </div>
+                        <div class="pl-4 border-l border-blue-500/20">
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-500">In:</span>
+                                <span class="text-white">andreMasoni.isAvailable()</span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-gray-500">Out:</span>
+                                <span class="text-[#00ff9d]">true</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 mt-4">
+                            <span class="text-[#00ff9d] font-bold">&gt;</span>
+                            <span class="terminal-cursor"></span>
+                        </div>
                     </div>
                 `;
             } else if (tab === 'output') {
                 terminalBody.innerHTML = `
-                    <div class="text-gray-500">[2026-03-19 15:40:35] Compilação concluída com sucesso.</div>
-                    <div class="text-gray-500">[2026-03-19 15:40:36] Verificando integridade dos microserviços...</div>
-                    <div class="text-green-500">[OK] Serviço de Autenticação</div>
-                    <div class="text-green-500">[OK] Serviço de Pagamentos</div>
-                    <div class="text-green-500">[OK] Gateway de API</div>
-                    <div class="text-gray-500">[2026-03-19 15:40:37] Sistema em estado saudável.</div>
+                    <div class="space-y-1">
+                        <div class="text-gray-500 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                            [2026-03-20 14:40:35] Compilação concluída com sucesso.
+                        </div>
+                        <div class="text-gray-500 flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span>
+                            [2026-03-20 14:40:36] Verificando integridade dos microserviços...
+                        </div>
+                        <div class="text-green-500 flex items-center gap-2 pl-4">
+                            <i data-lucide="check" class="w-3 h-3"></i>
+                            Serviço de Autenticação
+                        </div>
+                        <div class="text-green-500 flex items-center gap-2 pl-4">
+                            <i data-lucide="check" class="w-3 h-3"></i>
+                            Serviço de Pagamentos
+                        </div>
+                        <div class="text-green-500 flex items-center gap-2 pl-4">
+                            <i data-lucide="check" class="w-3 h-3"></i>
+                            Gateway de API
+                        </div>
+                        <div class="text-gray-500 flex items-center gap-2 mt-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                            [2026-03-20 14:40:37] Sistema em estado saudável.
+                        </div>
+                    </div>
                 `;
             }
+            lucide.createIcons();
             terminalBody.scrollTop = terminalBody.scrollHeight;
         }
 
@@ -823,11 +910,25 @@
             
             typeLog();
 
+            // Auto-hide terminal after 8 seconds
+            setTimeout(() => {
+                if (!terminalMinimized) {
+                    toggleTerminal();
+                }
+            }, 8000);
+
             setInterval(() => {
                 if (activeTerminalTab === 'terminal' && logIndex >= bootLogs.length) {
                     const time = new Date().toISOString().replace('T', ' ').substring(0, 19);
-                    const log = `<div>${time} INFO 1 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet : Completed 200 OK</div>`;
-                    terminalBody.innerHTML += log;
+                    const log = `<div><span class='log-timestamp'>[${time}]</span> <span class='log-info'>INFO</span> <span class='log-class'>o.s.w.s.DispatcherServlet</span> : Completed 200 OK</div>`;
+                    const prompt = terminalBody.querySelector('.terminal-prompt')?.parentElement;
+                    if (prompt) {
+                        const newLog = document.createElement('div');
+                        newLog.innerHTML = log;
+                        terminalBody.querySelector('.space-y-1').insertBefore(newLog, prompt);
+                    } else {
+                        terminalBody.innerHTML += log;
+                    }
                     terminalBody.scrollTop = terminalBody.scrollHeight;
                 }
             }, 5000);
