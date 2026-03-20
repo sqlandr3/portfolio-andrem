@@ -157,6 +157,38 @@
         .animate-slide-up {
             animation: slideUp 0.4s ease-out forwards;
         }
+
+        @keyframes shine {
+            0% { background-position: 0% center; }
+            100% { background-position: -200% center; }
+        }
+
+        .name-hover-animation {
+            color: white;
+            display: inline-block;
+            background: linear-gradient(90deg, #ffffff, #00ff9d, #ffffff, #00ff9d, #ffffff);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: white;
+            cursor: pointer;
+            transition: -webkit-text-fill-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.5s ease;
+        }
+
+        .name-hover-animation:hover {
+            -webkit-text-fill-color: transparent !important;
+            animation: shine 2s linear infinite !important;
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+
+        .name-hover-animation:not(:hover) {
+            opacity: 1;
+            transform: scale(1);
+        }
     </style>
 </head>
 <body class="flex flex-col h-screen select-none">
@@ -507,23 +539,28 @@
                                         <div class="w-2 h-2 bg-[#00ff9d] rounded-full shadow-[0_0_8px_rgba(0,255,157,0.5)]"></div>
                                     </div>
                                 </div>
-                                <div class="text-center md:text-left">
-                                    <h1 class="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">André Masoni Fraile</h1>
-                                    <p class="text-[#00ff9d] font-mono text-sm mb-4">@sqlandr3 • Java Backend Developer</p>
+                                <div class="text-center md:text-left flex-1">
+                                    <h1 class="text-3xl md:text-4xl font-bold mb-3 tracking-tight name-hover-animation">
+                                        André Masoni Fraile
+                                    </h1>
+                                    <p class="text-[#00ff9d] font-mono text-sm mb-4">Java Backend Developer • Spring Boot & APIs</p>
+                                    <p class="text-gray-400 text-sm md:text-base max-w-xl mb-6 leading-relaxed">
+                                        Desenvolvedor Backend com experiência prática em <span class="text-white">Java</span> e <span class="text-white">Spring Boot</span>. Buscando sempre aplicar boas práticas como Clean Code e SOLID em projetos reais.
+                                    </p>
                                     <div class="flex flex-wrap justify-center md:justify-start gap-3">
-                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-[#00ff9d]/30 rounded-md flex items-center gap-2 group hover:border-[#00ff9d] transition-all cursor-default">
+                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-[#00ff9d]/30 rounded-md flex items-center gap-2 group hover:border-[#00ff9d] hover:scale-105 transition-all cursor-default">
                                             <div class="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shadow-[0_0_5px_rgba(0,255,157,0.5)]"></div>
-                                            <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">Java</span>
+                                            <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">Java 17</span>
                                         </div>
-                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-blue-500/30 rounded-md flex items-center gap-2 group hover:border-blue-500 transition-all cursor-default">
+                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-blue-500/30 rounded-md flex items-center gap-2 group hover:border-blue-500 hover:scale-105 transition-all cursor-default">
                                             <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
-                                            <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">Spring Boot</span>
+                                            <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">Spring Boot 3</span>
                                         </div>
-                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-purple-500/30 rounded-md flex items-center gap-2 group hover:border-purple-500 transition-all cursor-default">
+                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-purple-500/30 rounded-md flex items-center gap-2 group hover:border-purple-500 hover:scale-105 transition-all cursor-default">
                                             <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
                                             <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">PostgreSQL</span>
                                         </div>
-                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-cyan-500/30 rounded-md flex items-center gap-2 group hover:border-cyan-500 transition-all cursor-default">
+                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-cyan-500/30 rounded-md flex items-center gap-2 group hover:border-cyan-500 hover:scale-105 transition-all cursor-default">
                                             <div class="w-1.5 h-1.5 rounded-full bg-cyan-500"></div>
                                             <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">Docker</span>
                                         </div>
@@ -535,25 +572,25 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
                                 <div class="p-5 bg-[#252525]/50 border border-white/5 rounded-xl hover:border-[#00ff9d]/30 transition-colors group">
                                     <div class="flex items-center gap-3 mb-3">
-                                        <div class="p-2 bg-red-500/10 rounded-lg text-red-500">
-                                            <i data-lucide="code-2" class="w-5 h-5"></i>
+                                        <div class="p-2 bg-[#00ff9d]/10 rounded-lg text-[#00ff9d]">
+                                            <i data-lucide="shield-check" class="w-5 h-5"></i>
                                         </div>
-                                        <h3 class="font-semibold text-white">Mais Do Que Código</h3>
+                                        <h3 class="font-semibold text-white">Segurança & Autenticação</h3>
                                     </div>
                                     <p class="text-sm text-gray-400 leading-relaxed">
-                                        Focado em estruturar sistemas que <span class="text-white">escalam</span> e são <span class="text-white">seguros</span>. Não basta funcionar, cada decisão técnica deve ser defensável.
+                                        Experiência com <span class="text-white">Spring Security</span> e <span class="text-white">JWT</span> para proteção de endpoints.
                                     </p>
                                 </div>
 
                                 <div class="p-5 bg-[#252525]/50 border border-white/5 rounded-xl hover:border-[#00ff9d]/30 transition-colors group">
                                     <div class="flex items-center gap-3 mb-3">
                                         <div class="p-2 bg-blue-500/10 rounded-lg text-blue-500">
-                                            <i data-lucide="database" class="w-5 h-5"></i>
+                                            <i data-lucide="layers" class="w-5 h-5"></i>
                                         </div>
-                                        <h3 class="font-semibold text-white">Arquitetura em Camadas</h3>
+                                        <h3 class="font-semibold text-white">Arquitetura & Clean Code</h3>
                                     </div>
                                     <p class="text-sm text-gray-400 leading-relaxed">
-                                        Especialista em APIs REST com <span class="text-white">segurança JWT</span>, tratamento de erros centralizado e <span class="text-white">testes automatizados</span>.
+                                        Aplicação de padrões <span class="text-white">SOLID</span> e organização de código em camadas para melhor manutenibilidade.
                                     </p>
                                 </div>
                             </div>
