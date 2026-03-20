@@ -6,7 +6,7 @@ Este repositório contém o código-fonte do meu portfólio profissional como de
 
 ## 📄 Copyright
 
-© 2026 André Masoni Fraile. Todos os direitos reservados.
+© 2026 André Masoni. Todos os direitos reservados.
 
 Este projeto é de uso exclusivamente pessoal e não está autorizado para cópia, distribuição, modificação ou reutilização sem permissão explícita do autor.
 
