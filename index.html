@@ -141,6 +141,15 @@
             animation: pulse-glow 2s infinite;
         }
 
+        @keyframes icon-pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(0, 255, 157, 0)); }
+            50% { transform: scale(1.15); filter: drop-shadow(0 0 8px rgba(0, 255, 157, 0.6)); color: #00ff9d; }
+            100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(0, 255, 157, 0)); }
+        }
+        .animate-icon-pulse {
+            animation: icon-pulse 2s infinite ease-in-out;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -459,7 +468,7 @@
                 overlay.classList.remove('hidden');
                 setTimeout(() => overlay.classList.add('opacity-100'), 10);
                 filesIcon.classList.add('text-[#00ff9d]');
-                filesIcon.classList.remove('text-gray-500');
+                filesIcon.classList.remove('text-gray-500', 'animate-icon-pulse');
             } else {
                 sidebar.classList.add('-translate-x-full');
                 sidebar.classList.remove('translate-x-12');
@@ -467,7 +476,7 @@
                 overlay.classList.remove('opacity-100');
                 setTimeout(() => overlay.classList.add('hidden'), 300);
                 filesIcon.classList.remove('text-[#00ff9d]');
-                filesIcon.classList.add('text-gray-500');
+                filesIcon.classList.add('text-gray-500', 'animate-icon-pulse');
             }
         }
 
@@ -484,12 +493,12 @@
                 sidebar.classList.remove('md:w-0', 'md:opacity-0', 'md:border-none');
                 sidebar.classList.add('md:w-60', 'md:opacity-100');
                 filesIcon.classList.add('text-[#00ff9d]');
-                filesIcon.classList.remove('text-gray-500');
+                filesIcon.classList.remove('text-gray-500', 'animate-icon-pulse');
             } else {
                 sidebar.classList.remove('md:w-60', 'md:opacity-100');
                 sidebar.classList.add('md:w-0', 'md:opacity-0', 'md:border-none');
                 filesIcon.classList.remove('text-[#00ff9d]');
-                filesIcon.classList.add('text-gray-500');
+                filesIcon.classList.add('text-gray-500', 'animate-icon-pulse');
             }
         }
 
