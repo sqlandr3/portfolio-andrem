@@ -1,46 +1,36 @@
-# 💼 Portfólio — André Masoni Fraile
+# Portfólio André Masoni Fraile
 
-Este repositório contém o código-fonte do meu portfólio profissional como desenvolvedor back-end com foco em Java.
+Este é um projeto React desenvolvido com Vite e Tailwind CSS, simulando uma IDE de desenvolvimento Backend.
 
----
+## Como Executar Localmente
 
-## 📄 Copyright
+Para rodar este projeto em sua máquina, siga os passos abaixo:
 
-© 2026 André Masoni. Todos os direitos reservados.
+1. **Instalar Dependências:**
+   Abra o terminal na pasta do projeto e execute:
+   ```bash
+   npm install
+   ```
 
-Este projeto é de uso exclusivamente pessoal e não está autorizado para cópia, distribuição, modificação ou reutilização sem permissão explícita do autor.
+2. **Iniciar o Servidor de Desenvolvimento:**
+   Após a instalação, inicie o servidor com:
+   ```bash
+   npm run dev
+   ```
 
-O código, design e conteúdo apresentados neste repositório são protegidos por direitos autorais.
-
----
-
-## 📌 Sobre
-
-Sou desenvolvedor back-end com foco na construção de APIs REST seguras, organizadas e prontas para produção.  
-Tenho experiência com arquitetura em camadas, autenticação JWT, persistência com JPA e boas práticas de engenharia de software.
-
-Este portfólio foi desenvolvido com o objetivo de apresentar minhas habilidades técnicas, projetos e visão de construção de sistemas.
-
----
-
-## 🚀 Tecnologias Utilizadas
-
-- Java  
-- Spring Boot  
-- HTML, CSS e JavaScript  
-- Git e GitHub  
+3. **Acessar o Aplicativo:**
+   O terminal informará uma URL (geralmente `http://localhost:3000` ou `http://localhost:5173`). Abra essa URL no seu navegador.
 
 ---
 
-## 🌐 Acesso
+## Por que abrir o `index.html` diretamente não funciona?
 
-Acesse o portfólio online:
+Este é um aplicativo moderno baseado em módulos JavaScript (ESM). Navegadores modernos bloqueiam o carregamento de módulos via protocolo `file://` por motivos de segurança (CORS). Além disso, o código React precisa ser processado pelo Vite antes de ser exibido. É necessário usar um servidor local (como o comando `npm run dev` faz) para que o aplicativo funcione corretamente.
 
-👉 https://sqlandr3.github.io/portfolio-andrem/
+## Tecnologias Utilizadas
 
----
-
-## ⚠️ Aviso
-
-Este repositório tem finalidade de apresentação profissional.  
-Partes do código podem ser adaptadas ou omitidas por questões estratégicas.
+- **React 18**
+- **Vite**
+- **Tailwind CSS**
+- **Lucide React** (Ícones)
+- **Framer Motion** (Animações)
