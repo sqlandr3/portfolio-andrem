@@ -19,8 +19,13 @@
             --sidebar: #121212;
             --editor: #1a1a1a;
             --terminal: #0d0d0d;
-            --java-red: #e06c75;
-            --spring-green: #98c379;
+            --syntax-keyword: #c678dd;
+            --syntax-string: #98c379;
+            --syntax-function: #61afef;
+            --syntax-variable: #e06c75;
+            --syntax-comment: #7f848e;
+            --syntax-type: #d19a66;
+            --syntax-constant: #56b6c2;
         }
 
         body {
@@ -36,14 +41,41 @@
         .font-mono { font-family: 'Fira Code', monospace; }
         
         /* Syntax Highlighting */
-        .syntax-keyword { color: #c678dd; }
-        .syntax-string { color: #98c379; }
-        .syntax-function { color: #61afef; }
-        .syntax-variable { color: #e06c75; }
-        .syntax-comment { color: #7f848e; font-style: italic; }
-        .syntax-type { color: #d19a66; }
-        .syntax-constant { color: #56b6c2; }
+        .syntax-keyword { color: var(--syntax-keyword); }
+        .syntax-string { color: var(--syntax-string); }
+        .syntax-function { color: var(--syntax-function); }
+        .syntax-variable { color: var(--syntax-variable); }
+        .syntax-comment { color: var(--syntax-comment); font-style: italic; }
+        .syntax-type { color: var(--syntax-type); }
+        .syntax-constant { color: var(--syntax-constant); }
         .syntax-default { color: #abb2bf; }
+
+        /* Synchronized Pulse Animation */
+        .status-pulse {
+            animation: statusPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes statusPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.9); }
+        }
+        
+        /* Breadcrumbs */
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 16px;
+            background-color: var(--editor);
+            font-size: 11px;
+            color: #858585;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .breadcrumb-item:hover {
+            color: #cccccc;
+            cursor: pointer;
+        }
         
         .line-number {
             display: inline-block;
@@ -71,6 +103,7 @@
             background-color: var(--editor);
             color: white;
             border-top: 1px solid var(--accent);
+            box-shadow: inset 0 10px 20px -10px rgba(0, 255, 157, 0.2);
         }
 
         .tab:not(.active) {
@@ -140,7 +173,7 @@
                 <i data-lucide="menu" class="w-4 h-4 text-gray-400"></i>
             </button>
         </div>
-        <div class="text-[10px] md:text-[11px] text-gray-400 font-medium truncate px-2">© Copyright 2026 André Masoni</div>
+        <div class="text-[10px] md:text-[11px] text-gray-400 font-medium truncate px-2">© André Masoni Fraile</div>
         <div class="w-8 md:w-12"></div>
     </div>
 
@@ -244,35 +277,43 @@
     </div>
 
     <!-- Status Bar -->
-    <div class="h-6 bg-[#00ff9d] flex items-center justify-between px-3 text-[11px] font-semibold text-black shrink-0">
+    <div class="h-6 bg-[#007acc] flex items-center justify-between px-3 text-white text-[11px] shrink-0 z-50">
         <div class="flex items-center gap-4">
-            <div class="flex items-center gap-1 hover:bg-black/10 px-1 cursor-pointer">
-                <i data-lucide="git-branch" class="w-3.5 h-3.5"></i> <span class="hidden sm:inline">main*</span>
+            <div class="flex items-center gap-1 hover:bg-white/10 px-1 cursor-pointer">
+                <i data-lucide="remote" class="w-3 h-3"></i>
+                <span class="hidden sm:inline">WSL: Ubuntu</span>
             </div>
-            <div class="flex items-center gap-1 hover:bg-black/10 px-1 cursor-pointer">
-                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> 0
+            <div class="flex items-center gap-1 hover:bg-white/10 px-1 cursor-pointer">
+                <i data-lucide="git-branch" class="w-3.5 h-3.5"></i>
+                <span class="hidden sm:inline">main*</span>
             </div>
-            <div class="hidden sm:flex items-center gap-1 hover:bg-black/10 px-1 cursor-pointer">
-                <i data-lucide="alert-circle" class="w-3.5 h-3.5"></i> 0
+            <div class="flex items-center gap-1 hover:bg-white/10 px-1 cursor-pointer">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
             </div>
         </div>
         <div class="flex items-center gap-4">
-            <div class="hidden sm:block hover:bg-black/10 px-1 cursor-pointer">Lin 1, Col 1</div>
-            <div class="hover:bg-black/10 px-1 cursor-pointer">UTF-8</div>
-            <div class="hidden xs:flex items-center gap-1 hover:bg-black/10 px-1 cursor-pointer">
-                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Prettier
+            <div class="hover:bg-white/10 px-1 cursor-pointer hidden md:block">Ln 1, Col 1</div>
+            <div class="hover:bg-white/10 px-1 cursor-pointer hidden md:block">Spaces: 4</div>
+            <div class="hover:bg-white/10 px-1 cursor-pointer">UTF-8</div>
+            <div class="hover:bg-white/10 px-1 cursor-pointer flex items-center gap-1">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
+                <span class="hidden xs:inline">Prettier</span>
+            </div>
+            <div class="hover:bg-white/10 px-1 cursor-pointer font-bold">Java</div>
+            <div class="hover:bg-white/10 px-1 cursor-pointer">
+                <i data-lucide="bell" class="w-3.5 h-3.5"></i>
             </div>
         </div>
     </div>
 
     <script>
         const FILES = [
-            { id: 'readme', name: 'README.md', type: 'md', icon: 'file-text', color: 'text-blue-400' },
-            { id: 'about', name: 'Perfil.java', type: 'java', icon: 'file-code', color: 'text-red-500' },
-            { id: 'skills', name: 'Tecnologias.yaml', type: 'yaml', icon: 'file-text', color: 'text-green-400' },
-            { id: 'experience', name: 'Experiencia.java', type: 'java', icon: 'file-code', color: 'text-red-500' },
-            { id: 'projects', name: 'Projetos.json', type: 'json', icon: 'file-json', color: 'text-[#00ff9d]' },
-            { id: 'contact', name: 'Contato.sh', type: 'sh', icon: 'terminal', color: 'text-gray-400' }
+            { id: 'readme', name: 'README.md', type: 'md', icon: 'info', color: 'text-blue-400' },
+            { id: 'about', name: 'Perfil.java', type: 'java', icon: 'coffee', color: 'text-orange-400' },
+            { id: 'skills', name: 'Tecnologias.yaml', type: 'yaml', icon: 'settings', color: 'text-green-400' },
+            { id: 'experience', name: 'Experiencia.java', type: 'java', icon: 'coffee', color: 'text-orange-400' },
+            { id: 'projects', name: 'Projetos.json', type: 'json', icon: 'layout', color: 'text-[#00ff9d]' },
+            { id: 'contact', name: 'Contato.sh', type: 'sh', icon: 'terminal', color: 'text-green-400' }
         ];
 
         let activeFile = 'readme';
@@ -343,7 +384,24 @@
         function selectFile(id) {
             activeFile = id;
             if (!openFiles.includes(id)) openFiles.push(id);
-            document.getElementById('breadcrumb-file').innerText = FILES.find(f => f.id === id).name;
+            
+            const file = FILES.find(f => f.id === id);
+            const breadcrumbFile = document.getElementById('breadcrumb-file');
+            breadcrumbFile.innerText = file.name;
+            
+            // Update breadcrumb path based on file type
+            const breadcrumbContainer = breadcrumbFile.parentElement;
+            const pathItems = breadcrumbContainer.querySelectorAll('span:not(#breadcrumb-file)');
+            if (file.type === 'java') {
+                pathItems[0].innerText = 'src';
+                pathItems[1].innerText = 'main';
+            } else if (file.type === 'sh') {
+                pathItems[0].innerText = 'scripts';
+                pathItems[1].innerText = 'bin';
+            } else {
+                pathItems[0].innerText = 'root';
+                pathItems[1].innerText = 'docs';
+            }
             
             // Close mobile menu if open
             const sidebar = document.getElementById('sidebar');
@@ -445,17 +503,30 @@
                                         <img src="andremasoni.jpg" class="w-full h-full object-cover" alt="André Masoni">
                                     </div>
 
-                                    <div class="absolute bottom-1 right-1 w-6 h-6 bg-[#00ff9d] rounded-full border-4 border-[#1a1a1a] flex items-center justify-center">
-                                        <div class="w-2 h-2 bg-black rounded-full animate-pulse"></div>
+                                    <div class="absolute bottom-1 right-1 w-5 h-5 bg-[#1a1a1a] rounded-full border border-[#00ff9d]/30 flex items-center justify-center shadow-lg status-pulse">
+                                        <div class="w-2 h-2 bg-[#00ff9d] rounded-full shadow-[0_0_8px_rgba(0,255,157,0.5)]"></div>
                                     </div>
                                 </div>
                                 <div class="text-center md:text-left">
                                     <h1 class="text-2xl md:text-3xl font-bold text-white mb-2 tracking-tight">André Masoni Fraile</h1>
                                     <p class="text-[#00ff9d] font-mono text-sm mb-4">@sqlandr3 • Java Backend Developer</p>
-                                    <div class="flex flex-wrap justify-center md:justify-start gap-2">
-                                        <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-gray-400 uppercase tracking-wider">Spring Boot</span>
-                                        <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-gray-400 uppercase tracking-wider">APIs REST</span>
-                                        <span class="px-2 py-1 bg-white/5 border border-white/10 rounded text-[10px] text-gray-400 uppercase tracking-wider">JWT Security</span>
+                                    <div class="flex flex-wrap justify-center md:justify-start gap-3">
+                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-[#00ff9d]/30 rounded-md flex items-center gap-2 group hover:border-[#00ff9d] transition-all cursor-default">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-[#00ff9d] shadow-[0_0_5px_rgba(0,255,157,0.5)]"></div>
+                                            <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">Java</span>
+                                        </div>
+                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-blue-500/30 rounded-md flex items-center gap-2 group hover:border-blue-500 transition-all cursor-default">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-blue-500"></div>
+                                            <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">Spring Boot</span>
+                                        </div>
+                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-purple-500/30 rounded-md flex items-center gap-2 group hover:border-purple-500 transition-all cursor-default">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                                            <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">PostgreSQL</span>
+                                        </div>
+                                        <div class="px-3 py-1.5 bg-[#1e1e1e] border border-cyan-500/30 rounded-md flex items-center gap-2 group hover:border-cyan-500 transition-all cursor-default">
+                                            <div class="w-1.5 h-1.5 rounded-full bg-cyan-500"></div>
+                                            <span class="text-[10px] font-mono text-gray-300 uppercase tracking-widest">Docker</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -482,7 +553,7 @@
                                         <h3 class="font-semibold text-white">Arquitetura em Camadas</h3>
                                     </div>
                                     <p class="text-sm text-gray-400 leading-relaxed">
-                                        Ascensão em APIs REST com <span class="text-white">segurança JWT</span>, tratamento de erros centralizado e <span class="text-white">testes automatizados</span>.
+                                        Especialista em APIs REST com <span class="text-white">segurança JWT</span>, tratamento de erros centralizado e <span class="text-white">testes automatizados</span>.
                                     </p>
                                 </div>
                             </div>
@@ -688,8 +759,26 @@
 
         function initTerminal() {
             setTerminalTab('terminal');
+            
+            // Typing effect for initial logs
+            terminalBody.innerHTML = '';
+            let logIndex = 0;
+            
+            function typeLog() {
+                if (logIndex < bootLogs.length) {
+                    const div = document.createElement('div');
+                    div.innerHTML = bootLogs[logIndex];
+                    terminalBody.appendChild(div);
+                    terminalBody.scrollTop = terminalBody.scrollHeight;
+                    logIndex++;
+                    setTimeout(typeLog, Math.random() * 100 + 20);
+                }
+            }
+            
+            typeLog();
+
             setInterval(() => {
-                if (activeTerminalTab === 'terminal') {
+                if (activeTerminalTab === 'terminal' && logIndex >= bootLogs.length) {
                     const time = new Date().toISOString().replace('T', ' ').substring(0, 19);
                     const log = `<div>${time} INFO 1 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet : Completed 200 OK</div>`;
                     terminalBody.innerHTML += log;
