@@ -1,9 +1,36 @@
-# ⚖️ Copyright
+# Portfólio André Masoni Fraile
 
-© 2026 **André Masoni**. Todos os direitos reservados.
+Este é um projeto React desenvolvido com Vite e Tailwind CSS, simulando uma IDE de desenvolvimento Backend.
 
-Este repositório e todo o seu conteúdo (incluindo, mas não se limitando a códigos, textos, imagens, design e demais arquivos) são protegidos por leis de direitos autorais.
+## Como Executar Localmente
 
-Nenhuma parte deste projeto pode ser reproduzida, distribuída, modificada ou utilizada de qualquer forma, total ou parcialmente, sem autorização prévia e expressa do autor.
+Para rodar este projeto em sua máquina, siga os passos abaixo:
 
-O uso não autorizado deste material pode resultar em sanções civis e criminais, conforme a legislação aplicável.
+1. **Instalar Dependências:**
+   Abra o terminal na pasta do projeto e execute:
+   ```bash
+   npm install
+   ```
+
+2. **Iniciar o Servidor de Desenvolvimento:**
+   Após a instalação, inicie o servidor com:
+   ```bash
+   npm run dev
+   ```
+
+3. **Acessar o Aplicativo:**
+   O terminal informará uma URL (geralmente `http://localhost:3000` ou `http://localhost:5173`). Abra essa URL no seu navegador.
+
+---
+
+## Por que abrir o `index.html` diretamente não funciona?
+
+Este é um aplicativo moderno baseado em módulos JavaScript (ESM). Navegadores modernos bloqueiam o carregamento de módulos via protocolo `file://` por motivos de segurança (CORS). Além disso, o código React precisa ser processado pelo Vite antes de ser exibido. É necessário usar um servidor local (como o comando `npm run dev` faz) para que o aplicativo funcione corretamente.
+
+## Tecnologias Utilizadas
+
+- **React 18**
+- **Vite**
+- **Tailwind CSS**
+- **Lucide React** (Ícones)
+- **Framer Motion** (Animações)

@@ -381,13 +381,15 @@
         
         <!-- Activity Bar (Simplified) -->
         <div id="activity-bar" class="w-12 bg-[#1e1e1e] flex md:flex flex-col items-center py-4 gap-2 border-r border-black/20 shrink-0 z-40 absolute md:relative top-0 bottom-0 left-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <!-- Hide Explorer -->
+            <div class="relative w-full flex justify-center cursor-pointer group py-2.5" onclick="toggleSidebar()">
+                <div id="indicator-explorer" class="absolute left-0 top-0 bottom-0 w-[2px] bg-[#00ff9d] transition-all"></div>
+                <i data-lucide="menu" id="activity-files-icon" class="w-6 h-6 text-white group-hover:text-white transition-colors" title="Explorador"></i>
+            </div>
+            <!-- Home -->
             <div class="relative w-full flex justify-center cursor-pointer group py-2.5" onclick="selectFile('readme')">
                 <div id="indicator-readme" class="absolute left-0 top-0 bottom-0 w-[2px] bg-[#00ff9d] transition-all"></div>
                 <i data-lucide="home" id="activity-home-icon" class="w-6 h-6 text-white group-hover:text-white transition-colors" title="Início"></i>
-            </div>
-            <div class="relative w-full flex justify-center cursor-pointer group py-2.5" onclick="toggleSidebar()">
-                <div id="indicator-explorer" class="absolute left-0 top-0 bottom-0 w-[2px] bg-[#00ff9d] transition-all"></div>
-                <i data-lucide="files" id="activity-files-icon" class="w-6 h-6 text-white group-hover:text-white transition-colors" title="Explorador"></i>
             </div>
             <div class="relative w-full flex justify-center cursor-pointer group py-2.5" onclick="selectFile('solutions')">
                 <div id="indicator-solutions" class="absolute left-0 top-0 bottom-0 w-[2px] bg-transparent transition-all"></div>
@@ -939,8 +941,8 @@
                                     <p class="text-[10px] md:text-xs text-gray-400 leading-relaxed">Transformar desafios de negócio complexos em soluções técnicas elegantes, priorizando sempre a manutenibilidade.</p>
                                 </div>
 
-                                <div class="bento-card p-2 md:p-3 rounded-3xl group">
-                                    <div class="w-5 h-5 md:w-6 md:h-6 rounded bg-purple-500/10 flex items-center justify-center mb-1.5 group-hover:scale-110 transition-transform">
+                                <div class="bento-card p-4 md:p-6 rounded-3xl group">
+                                    <div class="w-5 h-5 md:w-6 md:h-6 rounded-lg bg-purple-500/10 flex items-center justify-center mb-1.5 group-hover:scale-110 transition-transform">
                                         <i data-lucide="shield-check" class="w-3 h-3 md:w-3.5 md:h-3.5 text-purple-400"></i>
                                     </div>
                                     <h3 class="text-xs md:text-sm font-bold text-white mb-0.5">Segurança</h3>
@@ -1038,6 +1040,20 @@
                                         <div class="p-1.5 bg-white/5 rounded-lg border border-white/5 text-[11px] md:text-xs text-gray-300 text-center">SOLID</div>
                                         <div class="p-1.5 bg-white/5 rounded-lg border border-white/5 text-[11px] md:text-xs text-gray-300 text-center">Clean Code</div>
                                         <div class="p-1.5 bg-white/5 rounded-lg border border-white/5 text-[11px] md:text-xs text-gray-300 text-center">Microservices</div>
+                                    </div>
+                                </div>
+
+                                <!-- Automation & Scripting -->
+                                <div class="bento-card p-5 md:p-8 rounded-3xl min-h-[160px] flex flex-col justify-center">
+                                    <div class="flex items-center gap-1 mb-3">
+                                        <div class="p-1.5 bg-purple-500/10 rounded-lg">
+                                            <i data-lucide="bot" class="w-4 h-4 md:w-5 md:h-5 text-purple-400"></i>
+                                        </div>
+                                        <h3 class="text-xs md:text-base font-bold text-white">Automação & Scripting</h3>
+                                    </div>
+                                    <div class="space-y-1.5">
+                                        <div class="p-1.5 bg-white/5 rounded-lg border border-white/5 text-[11px] md:text-xs text-gray-300 text-center">n8n</div>
+                                        <div class="p-1.5 bg-white/5 rounded-lg border border-white/5 text-[11px] md:text-xs text-gray-300 text-center">Python</div>
                                     </div>
                                 </div>
 
